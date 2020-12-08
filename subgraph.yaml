@@ -1,0 +1,36 @@
+specVersion: 0.0.2
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: Vyper_contract
+    network: mainnet
+    source:
+      address: "0xB8BAa0e4287890a5F79863aB62b7F175ceCbD433"
+      abi: Vyper_contract
+      startBlock: 10797159
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+        - Approval
+        - UpdateMiningParameters
+        - SetMinter
+        - SetAdmin
+      abis:
+        - name: Vyper_contract
+          file: ./abis/Vyper_contract.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+        - event: Approval(indexed address,indexed address,uint256)
+          handler: handleApproval
+        - event: UpdateMiningParameters(uint256,uint256,uint256)
+          handler: handleUpdateMiningParameters
+        - event: SetMinter(address)
+          handler: handleSetMinter
+        - event: SetAdmin(address)
+          handler: handleSetAdmin
+      file: ./src/mapping.ts
